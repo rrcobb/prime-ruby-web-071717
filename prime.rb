@@ -1,4 +1,4 @@
-# Add  code here!
+# Uses the sieve of eratosthenes to decide whether a number is prime
 def prime?(number)
   if number < 2
     return false
@@ -6,11 +6,11 @@ def prime?(number)
   # sieve of erasthenes
   root_ceil = Math.sqrt(number).ceil
   #         0      1      2     3     4      5     init rest to true
-  primes = [false, false, true, true, false, true, *Array.new([root_ceil - 5, 0].max, true)]
+  candidate_primes= [false, false, true, true, false, true, *Array.new([root_ceil - 5, 0].max, true)]
   if number <= 5 # how many we are initializing the sieve with
-    return primes[number]
+    return candidate_primes[number]
   end
-  primes.each_with_index do |candidate, index|
+  candidate_primes.each_with_index do |candidate, index|
     if !candidate
       next
     else
@@ -19,8 +19,8 @@ def prime?(number)
       else
         # update multiples of the (known prime) candidate, starting at the square of the candidate
         x = index ** 2
-        until !primes[x] do
-          primes[x] = false
+        until !candidate_primes[x] do
+          candidate_primes[x] = false
           x += index
         end
       end
